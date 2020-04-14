@@ -20,18 +20,23 @@ class Login extends Component {
   }
 
   handleSubmit(event) {
-    if (
-      this.state.username === "user1234" &&
-      this.state.password === "password1234"
-    ) {
-      alert("Login Successful");
-      const { username, password } = this.state;
-    }
-
     event.preventDefault();
+    const { username, password } = this.state;
+    const userNameCheck = /^[A-Z0-9]+$/i.test(username);
+    const passwordCheckReg = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,15})"
+    );
+    const passwordCheck = passwordCheckReg.test(password);
+    if (userNameCheck && passwordCheck) {
+      if (username === "user1234" && password === "Password@1") {
+        alert("Login Successful");
+        this.props.history.push("/dashboard");
+      }
+    } else {
+      alert("Login Unsuccessful");
+    }
   }
   render() {
-    console.log(this.state);
     return (
       <div className="block">
         <h2>Login Page</h2>
@@ -53,7 +58,7 @@ class Login extends Component {
             <input
               type="password"
               name="password"
-              placeholder="Enter: password1234"
+              placeholder="Enter: Password@1"
               value={this.state.password}
               onChange={this.handleChange}
               required
