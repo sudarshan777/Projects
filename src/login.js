@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import Dashboard from "./dashboard";
+import Home from "./home";
 import "./App.css";
 
 class Login extends Component {
   state = {
     username: "",
     password: "",
+    showDetails: false,
   };
 
   handleChange = (event) => {
@@ -24,8 +25,11 @@ class Login extends Component {
     const passwordCheck = passwordCheckReg.test(password);
     if (userNameCheck && passwordCheck) {
       if (username === "user1234" && password === "Password@1") {
+        this.setState({
+          showDetails: true,
+        });
         alert("Login Successful");
-        this.props.history.push("/Dashboard");
+        this.props.history.push("/Home");
       }
     } else {
       alert("Login Unsuccessful");
