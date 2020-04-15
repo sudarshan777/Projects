@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Dashboard from "./dashboard";
 import "./App.css";
 
 class Login extends Component {
@@ -24,7 +25,7 @@ class Login extends Component {
     if (userNameCheck && passwordCheck) {
       if (username === "user1234" && password === "Password@1") {
         alert("Login Successful");
-        this.props.history.push("/dashboard");
+        this.props.history.push("/Dashboard");
       }
     } else {
       alert("Login Unsuccessful");
