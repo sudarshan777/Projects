@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Home from "./home";
+import { loginUser } from "./redux/actions/index";
 import "./App.css";
 
 class Login extends Component {
@@ -8,15 +9,20 @@ class Login extends Component {
     password: "",
     showDetails: false,
   };
-
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
+    const { name, value } = event.target;
+    this.setState((prevState, prevProps) => {
+      return { [name]: value };
     });
   };
-
   handleSubmit = (event) => {
     event.preventDefault();
+    const { username, password } = this.state;
+    if (this.isValid()) {
+      this.props.dispatch(loginUser(username, password));
+    }
+  };
+  isValid = () => {
     const { username, password } = this.state;
     const userNameCheck = /^[A-Z0-9]+$/i.test(username);
     const passwordCheckReg = new RegExp(
@@ -29,12 +35,14 @@ class Login extends Component {
           showDetails: true,
         });
         alert("Login Successful");
-        this.props.history.push("/Home");
+        //this.props.history.push("/Home");
       }
-    } else {
-      alert("Login Unsuccessful");
+
+      return false;
     }
+    return true;
   };
+
   render() {
     return (
       <div className="block">
